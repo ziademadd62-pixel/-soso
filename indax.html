@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>زياد و إسراء</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(to bottom, #00111a, #002233);
+      font-family: "Cairo", sans-serif;
+      color: #fff;
+      text-align: center;
+      direction: rtl;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      top: 20%;
+      padding: 20px;
+      animation: slideDown 2.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #aeeaff;
+      text-shadow: 0 0 20px #aeeaff;
+      margin-bottom: 25px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #aeeaff; }
+      to { text-shadow: 0 0 30px #aeeaff; }
+    }
+
+    p {
+      font-size: 1.3em;
+      max-width: 600px;
+      margin: 0 auto 25px;
+      line-height: 1.9;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(174, 234, 255, 0.2);
+    }
+
+    .contact a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 25px;
+      border: 2px solid #aeeaff;
+      border-radius: 10px;
+      color: #aeeaff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .contact a:hover {
+      background: #aeeaff;
+      color: #002233;
+      box-shadow: 0 0 20px #aeeaff;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="snow"></canvas>
+
+  <div class="content">
+    <h1>زياد و إسراء</h1>
+    <p>
+      أختي إسراء مش مجرد أخت،  
+      دي صاحبتي، وسندي، وضحكة البيت ❤️  
+      يمكن نختلف أوقات، بس في النهاية هي أغلى الناس عندي.  
+      وجودها جنبي بيخلّي كل حاجة أبسط، وأجمل، واحلي اخت ف الدنيا🫶🏻🫵.  
+      ربنا يحفظها ليا دايمًا ويخليها سعيدة في كل أيامها 🌸
+    </p>
+
+    <div class="contact">
+      
+    </div>
+  </div>
+
+  <script>
+    // تأثير تساقط الثلج
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const snowflakes = [];
+
+    function createSnowflakes() {
+      for (let i = 0; i < 150; i++) {
+        snowflakes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1,
+          speed: Math.random() * 1 + 0.5,
+        });
+      }
+    }
+
+    function drawSnowflakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveSnowflakes();
+    }
+
+    function moveSnowflakes() {
+      for (let flake of snowflakes) {
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+          flake.y = 0;
+          flake.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function updateSnowfall() {
+      drawSnowflakes();
+      requestAnimationFrame(updateSnowfall);
+    }
+
+    createSnowflakes();
+    updateSnowfall();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
